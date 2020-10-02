@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources</title>
+</head>
+<body>
+    <form>
+        <input id="inputFullName" type="text" placeholder="Your Name" required />
+        <br />
+        <br />
+        <input id="inputEmail" type="text" placeholder="Your Email" required />
+        <br />
+        <br />
+        <input id="inputNameOfResource" type="text" placeholder="Name of Resource" required />
+        <br />
+        <br />
+        <input id="inputResourceDescription" type="text" placeholder="Resource Description" required />
+        <br />
+        <br />
+        <select id="selectResourceCategory" required>
+            <option selected>--Choose Category--</option>
+            <option value="Those in the CHANGED JOURNEY">Those in the CHANGED JOURNEY</option>
+            <option value="Family / Loved One">Family / Loved One</option>
+            <option value="Pastors / Leaders">Pastors / Leaders</option>
+            <option value="Parents">Parents</option>
+            <option value="For Men">For Men</option>
+            <option value="For Women">For Women</option>
+            <option value="Transgender">Transgender</option>
+            <option value="Psychology">Psychology</option>
+            <option value="Biography/ Autobiography">Biography/ Autobiography</option>
+            <option value="Other">Other</option>
+        </select>
+        <br />
+        <br />
+        <select id="selectResourcesType" required>
+            <option  selected>--Choose Type of Resource--</option>
+            <option value="Book">Book</option>
+            <option value="Website">Website</option>
+            <option value="E-Course">E-Course</option>
+            <option value="Organization / Speaker">Organization / Speaker</option>
+            <option value="Other">Other</option>
+        </select>
+        <br />
+        <br />
+        <select id="selectBannedOrCensored" required>
+            <option>Is this resource banned or censored</option>
+            <option value="Yes, it's been banned">Yes, it's been banned.</option>
+            <option value="No, it is not.">No, it is not.</option>
+            <option value="I don't know.">I don't know.</option>
+        </select>
+        <br />
+        <br />
+        <input id="inputResourcesLink" type="text" placeholder="Link to Resource" required />
+        <br />
+        <br />
+        <label>Upload an Image</label>
+        <input type="file" onchange="chooseFile(event)" required />
+        <br />
+        <br />
+        <button onclick="onSubmit(event)">Submit Image</button>
+    </form>
+    <div id="box">
+
+    </div>
+    
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/node-uuid/1.4.8/uuid.min.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-storage.js"></script>
+
+    <script>
+        
+
+
+        let file = {};
+        const chooseFile = (e) => {
+            file = e.target.files[0];
+        }
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyCSK96HvStHGPA242DirVlo5vCFhFEtXaE",
+            authDomain: "changed-resources-db.firebaseapp.com",
+            databaseURL: "https://changed-resources-db.firebaseio.com",
+            projectId: "changed-resources-db",
+            storageBucket: "changed-resources-db.appspot.com",
+            messagingSenderId: "19768883094",
+            appId: "1:19768883094:web:915e7f61e347f21d5f0fb7"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        const onSubmit = (e) => {
+            e.preventDefault();
+            let uniqueId = uuid.v4();
+            let image = file;
+            let imageUrl = `/images/${uniqueId}/${image.name}`; //insert image extension
+            let downloadImageUrl = "";
+            
+            const INPUT_NAME = document.getElementById('inputFullName').value;
+            const INPUT_EMAIL = document.getElementById('inputEmail').value;
+            const INPUT_NAME_OF_RESOURCE = document.getElementById('inputNameOfResource').value;
+            const INPUT_RESOURCE_DESCRIPTION = document.getElementById('inputResourceDescription').value;
+            const SELECT_RESOURCES_CATEGORY = document.getElementById('selectResourceCategory').value;
+            const SELECT_RESOURCES_TYPE = document.getElementById('selectResourcesType').value;
+            const SELECT_BANNED_OR_CENSORED = document.getElementById('selectBannedOrCensored').value;
+            const INPUT_RESOURCES_LINK = document.getElementById('inputResourcesLink').value;
+
+            var storageRef = firebase.storage().ref(imageUrl);
+            /*storageRef.put(image)
+                .then(function(snapshot){
+                    console.log('Uploading Image to Storage')
+                    snapshot.ref.getDownloadURL().then(url => {
+                    console.log(' * new url', url)
+                    })
+            });*/
+            firebase
+                .firestore()
+                .collection('resources-data')
+                .doc(uniqueId)
+                .set({
+                    id: uniqueId,
+                    name: INPUT_NAME,
+                    email: INPUT_EMAIL,
+                    name_of_resource: INPUT_NAME_OF_RESOURCE,
+                    resource_description: INPUT_RESOURCE_DESCRIPTION,
+                    resource_category: SELECT_RESOURCES_CATEGORY,
+                    resource_type: SELECT_RESOURCES_TYPE,
+                    banned_or_censored: SELECT_BANNED_OR_CENSORED,
+                    resource_link: INPUT_RESOURCES_LINK,
+                    image_url: imageUrl,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(function(snapshot){
+                    console.log('Uploading Data to FireStore!');
+                });
+            
+            
+
+        }
+    </script>
+
+</body>
+</html>

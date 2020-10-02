@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    body {
+        margin: 0px;
+        padding: 0px;
+        height: 100vh;
+    }
+
+    .main-body-container {
+        padding: 25px;
+        margin: 0 auto;
+        max-width: 1200px;
+        height: 600px;
+    }
+
+    .event-container {
+        display: flex;
+        height: 100%;
+    }
+
+    .border {
+        border: 1px solid black;
+    }
+    /** Event Date and Location */
+    .col-1-4 {
+        width: 35%;
+        _border-right:1px solid black;
+    }
+    .single-date-info h3 {
+        margin-left:10px;
+    }
+    .single-date-info h2 {
+        _margin-top:50px;
+    }
+    .single-event-location {
+        margin-top:50px;
+    }
+    .single-event-location h3 {
+        margin-left: 10px;
+    }
+    .google-map{
+        width:300px; 
+        height:200px;
+    }
+    .col-3-4 {
+        width: 65%;
+        _padding:10px 30px 30px;
+
+    }
+    .close-event h1{
+        padding:0px;
+        margin:0px;
+    }
+    .single-event-other-info {
+        width:100%;
+    }
+    .single-event-other-info .image-container{
+        width:100%;
+        height:300px;
+        margin-top:10px;
+    }
+    .single-event-other-info img {
+        width:100%;
+        height:100%;
+    }
+    .single-event-description {
+        padding:20px;
+    }
+</style>
+
+<body>
+    <div class="main-body-container">
+        <div class="event-container">
+            <div class="col-1-4">
+                <div class='col-1-4-container'>
+                    <div class="close-event" style="display:flex;">
+                        <h1>X</h1>
+                        <div style="align-self: center; margin-left:20px;">Back to Events</div>
+                    </div>
+                    <div class="single-date-info">
+                        <h2>NAME OF EVENT</h2>
+                        <h3>Starting: Oct 17th @ 8:00am</h3>
+                        <h3>Ending: Oct 21st @ 8:00pm</h3>
+                    </div>
+                    <div class="single-event-location">
+                        <h2>LOCATION:</h2>
+                        <h3>New York, NY</h3>
+                        <div class="google-map border"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3-4">
+                <div class="single-event-other-info">
+                    <div class="image-container">
+                        <img src="../images/oceanside-pier.jpg" />
+                    </div>
+                    <div class="single-event-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis ligula dapibus arcu vehicula iaculis. Nullam consectetur nec felis sed congue. Mauris non mi pretium, tincidunt sapien in, auctor lectus. Donec cursus augue ac varius auctor.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

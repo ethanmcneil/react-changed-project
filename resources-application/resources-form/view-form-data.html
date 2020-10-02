@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='root'></div>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-storage.js"></script>
+
+    <script type="text/babel">
+        var firebaseConfig = {
+            apiKey: "AIzaSyCSK96HvStHGPA242DirVlo5vCFhFEtXaE",
+            authDomain: "changed-resources-db.firebaseapp.com",
+            databaseURL: "https://changed-resources-db.firebaseio.com",
+            projectId: "changed-resources-db",
+            storageBucket: "changed-resources-db.appspot.com",
+            messagingSenderId: "19768883094",
+            appId: "1:19768883094:web:915e7f61e347f21d5f0fb7"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    
+        class DataView extends React.Component{
+            constructor(){
+                super();
+                this.state = {
+                    data: [],
+                    imagesURLs: [],
+                }
+            }
+            componentDidMount(){
+                firebase
+                .firestore()
+                .collection('resources-data')
+                .onSnapshot(serverUpdate => {
+                    const serverData = serverUpdate.docs.map(item => {
+                        const data = item.data();
+                        data['id'] = item.id;
+                        return data;
+                    })
+                    this.setState({
+                        data: serverData,
+                    })
+                })
+            }
+        
+
+            render(){
+                return(
+                    <div>
+                        
+                        {
+                            this.state.data.map(item => {
+                            
+                                
+                                return(
+                                    <div key={item.name}>
+                                        <div>Name: {item.name}</div>
+                                        <div>Name of Resource: {item.name_of_resource}</div>
+                                        <div>Resource Category: {item.resource_category}</div>
+                                        <div>Image_URL: {item.image_url}</div>
+                                        <hr />
+                                        
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<DataView />, document.getElementById('root'));
+    
+    </script>
+</body>
+</html>

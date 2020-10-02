@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdn.blockspring.com/blockspring.js"></script>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+
+    <div id='root'></div>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+        const FilterCategoryForWhiteSpace = (cardData) =>{
+            let category = cardData.category;
+            category = category.split(',');
+            let newCategories = category.map(category => {
+                if(category.length > 1 && category[0] === " "){
+                    return category.substring(1);
+                }
+                else return category
+            })
+            return newCategories
+        }
+        class TestFilter extends React.Component{
+            constructor(){
+                super();
+                this.state = {
+                    data: []
+                }
+                this.getData = this.getData.bind(this);
+                
+            }
+
+            getData() {
+                var query = "SELECT *";
+                blockspring.runParsed("query-google-spreadsheet", {
+                    "query": query,
+                    "url": "https://docs.google.com/spreadsheets/d/1bYxA-1c0cZ3rUdTHDdrZkXDbFD3FWV0tinO580Fzr8c/edit#gid=555729794",
+                }, res => {
+                    let data = res.params.data
+                    this.setState({
+                        data: this.state.data.concat(data),
+                        uniqueList: data,
+                        isLoading: false
+
+                    })
+                })
+            }
+            componentDidMount() {
+                this.getData();
+            }
+
+            render(){
+                this.state.data.map(card => {
+                    let newCategories = FilterCategoryForWhiteSpace(card);
+                    let itemsData = newCategories.filter(category => {
+                            if(category === "Those in the CHANGED Journey"){ // Right String Equals the state Category
+                                return card // Filter Card Data
+                            }
+                    });
+                    console.log(itemsData)
+
+                })
+                return (
+                    <div>
+                        <h1>Test Filter</h1>
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<TestFilter />, document.getElementById('root'));
+    </script>
+</body>
+</html>

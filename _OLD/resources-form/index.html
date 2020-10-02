@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources Form</title>
+</head>
+<body>
+    <form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSfDhgEHNXKMHjDNadRsYv_lKvOM45hpEDtfza1L7-hoDY8kAA/formResponse" method="POST">
+        <input type="text" placeholder="Your Name" />
+        <input type="text" placeholder="Your Email" />
+        <input type="text" placeholder="Name of Resource" />
+        <input type="text" placeholder="Resource Description" />
+        <br />
+        <select>
+            <option value="Those in the CHANGED JOURNEY">Those in the CHANGED JOURNEY</option>
+            <option value="Family / Loved One">Family / Loved One</option>
+            <option value="Pastors / Leaders">Pastors / Leaders</option>
+            <option value="Parents">Parents</option>
+            <option value="For Men">For Men</option>
+            <option value="For Women">For Women</option>
+            <option value="Transgender">Transgender</option>
+            <option value="Psychology">Psychology</option>
+            <option value="Biography/ Autobiography">Biography/ Autobiography</option>
+            <option value="Other">Other</option>
+        </select>
+        <select>
+            <option value="Book">Book</option>
+            <option value="Website">Website</option>
+            <option value="E-Course">E-Course</option>
+            <option value="Organization / Speaker">Organization / Speaker</option>
+            <option value="Other">Other</option>
+        </select>
+        <br />
+        <select>
+            <option>Is this resource banned or censored</option>
+            <option value="Yes, it's been banned">Yes, it's been banned.</option>
+            <option value="No, it is not.">No, it is not.</option>
+            <option value="I don't know.">I don't know.</option>
+        </select>
+        <br />
+        <input type="text" name="entry.1560148993" placeholder="Link to Resource" required />
+        <br />
+        <label>Choose an Image</label>
+        <input type="file" id="fileImage" />
+        <br />
+        <button id="button" type="submit">Submit</button>
+
+    
+    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+    <script src='app.js'></script>
+</body>
+</html>
